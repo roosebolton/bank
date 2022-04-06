@@ -150,7 +150,6 @@ body {
 }
 
 
-
 @media screen and (min-width: 600px) {
     #navbar-toggle,
     #navbar-toggle[aria-expanded="true"] {
