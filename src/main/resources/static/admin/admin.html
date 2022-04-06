@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+<!-- header navbar gestandardiseerd over elke pagina-->
+<header id="navbar">
+    <nav class="navbar-container container">
+        <a href="../index.html" class="home-link">
+            <div class="navbar-logo"><img width="50px" class="navbar_sub_links_img" src="../images/chest.svg"
+                                          style="display: flex;"></div>
+            <h1 class="logo-text" id="logotext">THE PIRATE BANK</h1>
+        </a>
+        <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu"
+                aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div id="navbar-menu" aria-labelledby="navbar-toggle">
+            <ul class="navbar-links">
+                <li class="navbar-item"></span><a class="navbar-link" href="../index.html"><span data-feather="anchor"></span>
+                    Home</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../about/about.html"><span data-feather="user"></span>
+                    About</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../login/login.html"><span data-feather="log-out"></span>
+                    Uitloggen</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- extra header onder navbar-->
+<section id="header_dashboard">
+    <h1>ADMINISTRATOR DASHBOARD</h1>
+</section>
+
+<div class="flex_container">
+    <!-- container voor het zoeken van de gebruiker-->
+    <div class="dashboard_container">
+        <div class="container_header">
+            <h2>Zoek gebruiker</h2>
+        </div>
+        <div class="search_box" id="search_user">
+            <input type="text" id="search_input" placeholder=" Naam of UserId..." onchange="processInput()"><i
+                data-feather="search"></i>
+        </div>
+    </div>
+    <!-- container voor het tonen van de gebruikersgegevens -->
+    <div class=" dashboard_wide_container">
+        <div class="container_header">
+            <h2>Gebruikersgegevens</h2>
+
+        </div>
+        <div class="flex_container">
+            <div class="col_left">
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>Naam</p> <span id="name"></span></div>
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>Geboortedatum</p><span id="dateOfBirth"></span></div>
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>BSN-nummer</p><span id="BSN"></span></div>
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>IBAN</p><span id="IBAN"></span></div>
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>Saldo geldrekening</p><span id="balance"></span></div>
+            </div>
+            <div class="col_right">
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>Adres</p><span id="street"></span></div>
+                <div class="data_result" style="flex-direction: row; display: flex; justify-content: space-between">
+                    <p>Postcode Woonplaats</p><span id="zipcode"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- container voor het aanpassen van de transactiekosten-->
+<div class="flex_container">
+    <div class="dashboard_container">
+        <div class="container_header">
+            <h2>Transactiekosten aanpassen</h2>
+        </div>
+        <div class="dashboard_percentage" style="flex-direction: row; display: flex; justify-content: space-between">
+            <p>Huidige percentage: </p><span id="percentage"></span></div>
+        <form class="search_box" id="change_transaction_fee">
+            <input type="text" id="transaction_fee" placeholder=" Nieuw percentage"
+            >
+        </form>
+        <button class="btn_blue" id="btn_aanpassenperc" type="button">Aanpassen</button>
+    </div>
+
+    <!-- container voor het walletoverzicht -->
+    <div class=" dashboard_wide_container">
+        <div class="container_header">
+            <h2>Portefeuille</h2>
+            <h2>Totale waarde: </h2><span id="wallet_value"></span>
+        </div>
+        <table class="table" id="wallet_table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Coin</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Coin Value</th>
+                <th scope="col">Total Value</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script type="module" src="../js/admin.js"></script>
+<script type="module" src="../js/header.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+</html>

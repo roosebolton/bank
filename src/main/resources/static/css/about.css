@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666666;
+    background-color: #F5F5F5;
+}
+
+#header_about {
+    text-align: left;
+    min-height: 1rem;
+    color: black;
+    padding-top: 7rem;
+    padding-left: 13rem;
+    padding-bottom: 2rem;
+}
+
+#about_image {
+    position: relative;
+    align-content: center;
+    padding-left: 13rem;
+    min-height: 6rem;
+    z-index: -1;
+}
+
+#about_text {
+    position: relative;
+    text-align: left;
+    margin-top: 0;
+    padding-top: 2rem;
+    padding-left: 13rem;
+    padding-right: 15rem;
+    min-height: 15rem;
+    color: #333333;
+    font-size: 1rem;
+}
+
+
+
+
+
+

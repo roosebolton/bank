@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="inloggen">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <title>The Pirate Bank: inloggen</title>
+</head>
+<body>
+<header id="navbar">
+    <nav class="navbar-container container">
+        <a href="../index.html" class="home-link">
+            <div class="navbar-logo"><img width="50px" class="navbar_sub_links_img" src="../images/chest.svg" style="display: flex;"></div>
+            <h1 class="logo-text">THE PIRATE BANK</h1>
+        </a>
+        <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div id="navbar-menu" aria-labelledby="navbar-toggle">
+            <ul class="navbar-links">
+                <li class="navbar-item"></span><a class="navbar-link" href="../index.html"><span data-feather="anchor"></span> Home</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../about/about.html"><span data-feather="user"></span> About</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../register/register.html"><span data-feather="pen-tool"></span> Registreren</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <div>
+        <div class="login-container">
+            <div class="login_header">
+                <h1 style="">Inloggen</h1>
+                <i class="fa-solid fa-user-check" style="color: var(--medium-grey)"></i>
+            </div>
+            <div class="inloggen_user" id="inloggen_user">
+                <div class="row_parent">
+                    <div style="display: flex; flex-direction: row">
+                        <div class="input_parent" >
+                            <input type="email" name="email" required placeholder="Emailadres" id="inloggen_email"
+                                   maxlength="320"
+                                   pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="row_parent" >
+                    <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                        <div class="input_parent">
+                            <input type="password" name="password" required placeholder="Wachtwoord" id="inloggen_password"
+                                   pattern=".{8,}"
+                                    maxlength="55"
+                                    minlength="8"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <button class="btn_blue" id="btn_inloggen" type="button" >inloggen</button>
+            </div>
+        </div>
+    </div>
+        <a href="#" class="modal_close">&times;</a>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script type="module" src="../js/header.js"></script>
+<script type="module" src="../js/login_PirateBank.js"></script>
+    </body>
+</html>
+
+
+
+
+
+
+    

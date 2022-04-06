@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Register">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/register.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>The Pirate Bank: Registreren</title>
+</head>
+<body>
+    <div style="display: flex; align-self: center; flex-direction:row; margin: auto; align-items: center; justify-content: center; margin-bottom: 50px;">
+        <img width="50px" class="navbar_sub_links_img"src="../images/chest.svg" style="display: flex;">
+        <h1 class="logo-text" style="display: flex; padding-left: 10px">THE PIRATEBANK</h1>
+    </div>
+    <a class="btn_previous_homepage" href="../index.html">
+        <i class="fa-solid fa-circle-chevron-left fa-5x btn_previous_icon" style="border-radius: 15px; padding-left: 10px " ></i>
+    </a>
+    <div>
+        <div class="register-container">
+            <button class="btn_previous" type="button">
+                <i class="fa-solid fa-circle-chevron-left fa-3x btn_previous_icon" style="border-radius: 15px; " ></i>
+            </button>
+
+            <div class="register_header">
+                <h1 style="">Registreren</h1>
+                <i class="fa-solid fa-user-check" style="color: var(--medium-grey)"></i>
+            </div>
+<!--            <form class="form" novalidate id="registerForm">-->
+            <div class="register_user" id="register_user">
+                <div class="row_parent">
+                    <div style="display: flex; flex-direction: row">
+                        <div class="input_parent" >
+                            <input type="email" name="email" required placeholder="Emailadres" id="register_email"
+                                   aria-label="Emailadres"
+                                   maxlength="320"
+                                   pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="row_parent" >
+                    <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                        <div class="input_parent">
+                            <input type="password" name="password" required placeholder="Wachtwoord" id="register_password"
+                                   aria-label="Wachtwoord"
+                                   pattern=".{8,}"
+                                    maxlength="55"
+                                    minlength="8"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <button class="btn_blue" id="btn_nextPage" type="button" >Volgende</button>
+            </div>
+<!--    /** secondary registration */-->
+            <div class="register_clientinfo" id="register_clientinfo">
+                <label class="row_parent" >Persoonlijke gegevens
+                    <div style="flex-direction: row; display: flex; justify-content: space-between">
+                        <div class="input_parent">
+                            <input type="text" name="name" required placeholder="Voornaam" id="register_firstname"
+                                   aria-label="Voornaam"
+                                   maxlength="45"
+                                   >
+                        </div>
+                        <div class="input_parent">
+                            <input type="text"  placeholder="Tussenvoegsel" id="register_infix"
+                                   aria-label="Tussenvoegsel"
+                                   pattern="[A-Za-zÀ-ȕ' -]+"
+                                   maxlength="10"
+                                   >
+                        </div>
+                        <div class="input_parent">
+                            <input type="text" name="name" required placeholder="Achternaam" id="register_lastname"
+                                   aria-label="Achternaam"
+                                   maxlength="45"
+                                   >
+                        </div>
+                    </div>
+                </label>
+                <div class="row_parent" >
+                    <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                        <div class="input_parent" >
+                            <input type="date" name="birthday" aria-label="Geboortedatum" required id="register_birthday">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row_parent" >
+                        <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                            <div class="input_parent">
+                                <input type="text" name="BSN_Number" placeholder="Burgerservicenummer" id="register_BSN_number" required
+                                       aria-label="Burgerservicenummer"
+                                       pattern="^([0][1-9][0-9]{7}|([1-9][0-9]{8}))$"
+                                       maxlength=9
+                                       minlength=9
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="row_parent">Adresgegevens
+                    <div style="flex-direction: row; display: flex; justify-content: left">
+                        <div class="input_parent" style="">
+                            <input type="postcode" name="postcode" required placeholder="Postcode" id="register_postcode"
+                                   aria-label="Postcode"
+                                   maxlength="6"
+                                   minlength="6"
+                                   pattern= "[1-9]{1}[0-9]{3}[a-zA-Z]{2}"
+                            >
+                        </div>
+                        <div class="input_parent" style="width: 25%">
+                            <input type="text" name="number" required placeholder="huisnr" id="register_streetnumber"
+                                   aria-label="huisnummer"
+                                   pattern="^[1-9]+[0-9]*$"
+                            >
+                        </div>
+                        <div class="input_parent" style="width: 25%">
+                            <input type="text" name="number" placeholder="toev" id="register_streetnumberAddition"
+                                   aria-label="toevoeging"
+                            >
+                        </div>
+                    </div>
+                    </label>
+                    <div class="row_parent" >
+                            <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                                <div class="input_parent" >
+                                    <input type="text" disabled="true" required placeholder="Straatnaam" id="register_streetname"
+                                           aria-label="straatnaam"
+                                    >
+                                </div>
+                            </div>
+                    </div>
+                <div class="row_parent" >
+                    <div style=" display: flex; flex-direction: row;  justify-content: space-between">
+                        <div class="input_parent" >
+                                <input type="text" disabled="true"  aria-label="Plaats" required placeholder="Plaats" id="register_city">
+                        </div>
+                    </div>
+                </div>
+
+                <label>Bankgegevens</label>
+                <div class="row_parent" >
+                    <div style="display: flex;">
+                        <div class="input_parent" style="display: flex; width: 100%">
+                            <input type="text" name="iban" aria-label="Rekeningnummer" required placeholder="IBAN rekeningnummer" id="register_IBAN">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn_blue" id="btn_sendForm" >Registreren</button>
+                </div>
+        </div>
+    </div>
+
+    <div id="popup-modal" class="modal">
+        <div class="modal_content">
+            <div class="modal_success" >
+                <h1>Huray! Uw registratie is gelukt</h1>
+                <div style="display: flex; justify-content: space-around">
+                    <h3 style="font-weight: lighter; color: var(--medium-dark-grey)">Klik op inloggen om uw zoektocht naar de schat te starten!</h3>
+                    <i class="fa-solid fa-circle-check fa-2x" style="display: flex; color: var(--succes-green-fill)"></i>
+                </div>
+                <button class="btn_blue" id="btn_registrationsuccess" type="button" >Inloggen</button>
+            </div>
+            <div class="modal_failure ">
+                <h1> Helaas, er is iets misgegaan</h1>
+                <div style="display: flex; justify-content: space-around">
+                    <h3 style="font-weight: lighter; color: var(--medium-dark-grey)">Ga terug en pas de velden aan!</h3>
+                    <i class="fa-solid fa-circle-xmark fa-6x" style="display: flex; color: var(--error-red-border)"></i>
+                </div>
+            </div>
+            <div class="modal_footer">
+               <p2></p2>
+            </div>
+            <a href="#" class="modal_close">&times;</a>
+        </div>
+    </div>
+    </body>
+</html>
+    <!-- javascript imports are at the bottom  -->
+    <script type="module" src="../js/registerPage.js"></script>
+
+
+
+
+    

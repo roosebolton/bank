@@ -1,0 +1,52 @@
+:root {
+
+    --primary-color-light: #0051FF;
+
+    --background-color-lightest:  #F6F8FB;
+    --background-color-lightblue: #F3F7FF;
+
+    /*--background-color-lightest: #F6F8FB;*/
+    /*--background-color-lightblue: #F3F7FF;*/
+
+
+    background-color: #F8FBFE;
+    --light-yellow-brown: #EFECDF;
+
+    --light-grey: #F5F5F5;
+    --medium-grey: #DDE1E6;
+    --medium-dark-grey: #616161;
+    --dark-grey: #424242;
+    --full-black:#070707;
+
+    --white-blue-grey-bg: #eff5ff;
+
+    --blue-light-soft: #3B82F6;
+
+    /* Alerts */
+    --error-red-fill: #FED7D7;
+    --error-red-border:#FC8181;
+
+    --succes-green-fill: #15803d;
+  }
+  
+
+@import url("https://fonts.googleapis.com/css?family=Maven+Pro:400,500,600,700");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+  body {
+    font-family: Inter, Helvetica, sans-serif;
+  }
+
+  button {
+      cursor: pointer;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  input {
+      outline: none;
+      border: none;
+  }

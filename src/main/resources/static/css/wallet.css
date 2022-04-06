@@ -1,0 +1,49 @@
+@import "global.css";
+
+body {
+  font-size: .875rem;
+}
+#main-margins{
+  margin-top: 80px;
+  margin-right: auto;
+}
+
+.header{
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+}
+
+body {
+  font-size: .875rem;
+  margin: auto;
+  align-content: center;
+  justify-content: center;
+  background-color: var(--background-color-lightest);
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--primary-color-light);
+  border-color: var(--blue-light-soft);
+}
+
+#adminButton{
+  visibility: hidden;
+}
+
+
+#navbar{
+  position: fixed;
+  z-index: 1;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .logo-text{
+    display: none;
+  }
+}
+
+

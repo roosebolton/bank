@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>The Pirate Bank: Handelen</title>
+</head>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<link rel="stylesheet" href="../css/tradeHeader.css">
+<link rel="stylesheet" href="../css/currency_dropdown_button.css">
+<link rel="stylesheet" href="../css/trade.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<body>
+<header id="navbar">
+    <nav class="navbar-container container">
+        <a href="/" class="home-link">
+            <div class="navbar-logo"><img width="50px" class="navbar_sub_links_img" src="../images/chest.svg" style="display: flex;"></div>
+            <h1 class="logo-text" id="logotext">THE PIRATEBANK</h1>
+        </a>
+        <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div id="navbar-menu" aria-labelledby="navbar-toggle">
+            <ul class="navbar-links">
+                <li class="navbar-item"></span><a class="navbar-link" href="/index.html"><span data-feather="anchor"></span> Home</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/about/about.html"><span data-feather="users"></span> About</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/trading/tradepage.html"><span data-feather="briefcase"></span> Trade</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../orderbook/orderbook.html"><span data-feather="bar-chart-2"></span> Orderbook</a></li>
+                <li class="navbar-item"><a class="navbar-link" id="logout" "><span data-feather="log-out"></span> Uitloggen</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--- Second navbar--->
+<header class="second_navbar_container">
+    <nav class="second_navbar">
+        <select id="coinSelectDropdown" class="coinSelectDropdown style widthHeight" name="Coins" >
+        </select>
+        <div class="dropdown">
+            <button class="dropbtn" >
+                <i class="fa-solid fa-wallet"></i>
+                <p id="selectedCurrency">Currency </p>
+            </button>
+            <div class="dropdown-content">
+                <button id="dropdown_euro">EUR</button>
+                <button id="dropdown_dollar">USD</button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Loading svg-->
+<div id="loading_icon" style="display: flex; justify-content: center">
+    <img width= 200px" src="../images/loading.svg" style="color: #eff5ff">
+</div>
+<div id="page_container" class="outer">
+    <!--- Page container which has the buy sell container and chart container-->
+    <div class="buy_page_container_top">
+        <!--- Buy Sell container--->
+        <div class="price_container">
+            <div class="price_container_header">
+                <button class="btn_select_buysell btn_select_buysell_active"
+                        id="btn_select_buysell_buy"
+                >Kopen</button>
+                <button class="btn_select_buysell"
+                        id="btn_select_buysell_sell"
+                >Verkopen</button>
+            </div>
+            <div class="price_saldo_element">
+                <p>Rekeningsaldo:</p>
+                <p id="saldo_user">-</p>
+            </div>
+            <div class="price_rowparent row">
+                <select name="orderType" class="order_select">
+                    <option value="">Kies uw ordertype</option>
+                    <option selected="selected" value="marketorder">Marktorder</option>
+                    <option disabled value="limitorder">Limietorder</option>
+                    <option value="limitorderinternal">Order interne markt</option>
+                </select>
+                <input type="number" disabled class="currency_value_select"  step="any" min="0" placeholder="prijs"/>
+            </div>
+            <div class="price_rowparent">
+                <p class="text_valutacoin_styling" id="text_valuta_payment">U betaalt:</p>
+
+                <div class="price_input_parent">
+                    <div class="valuta_container">
+                        <i id="trade_currency_icon" style='color: white' ></i>
+                    </div>
+                    <input type="text" class="input_field" id="input_valuta"
+                           placeholder="Geef hoeveelheid aan"
+                           min="0"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                    <div>
+                        <p class="selected_valuta_abbr">EUR</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price_rowparent">
+                <p class="text_valutacoin_styling" id="text_coin_payment">U ontvangt:</p>
+
+                <div class="price_input_parent">
+                    <div class="valuta_container" id="coin_container">
+                        <i class="fa-brands fa-bitcoin" style='color: white'></i>
+                    </div>
+                    <input type="text" id="input_amount"
+                           placeholder="Geef hoeveelheid aan"
+                           class="input_field"
+                           min="0"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                    <div>
+                        <p class="selected_coin_abbr">BTC</p>
+                    </div>
+                </div>
+            </div>
+            <div class="price_rowparent row">
+                <p class="text_valutacoin_styling">Handelskosten:</p>
+                <p class="text_valutacoin_styling" id="text_transactionfee_payment">0,00</p>
+            </div>
+
+            <div class="price_rowparent">
+                <button type="submit" class="btn_buy_sell" id="trade_button">Kopen</button>
+            </div>
+
+            <ul class="error_messages" id="error_messages">
+            </ul>
+        </div>
+        <!-- right side of page-->
+        <div>
+            <!--- chart container -->
+            <div class="chart_container">
+                <div class="chart_container_header">
+                    <div>
+                        <div class="chart_container_header_top" id="currentCoinValue">-</div>
+                        <div class="chart_container_header_bot">(Prijs)</div>
+                    </div>
+                    <div>
+                        <button class="btn_chart btn_chart_hover chart_select_button" name="0,25">W</button>
+                        <button class="btn_chart btn_chart_hover chart_select_button" name="1">M</button>
+                        <button class="btn_chart btn_chart_hover chart_select_button" name="6">6M</button>
+                        <button class="btn_chart btn_chart_hover chart_select_button" name="12">J</button>
+                        <button class="btn_chart btn_chart_hover chart_select_button" name="120">TO</button>
+                    </div>
+                </div>
+                <!-- chart display -->
+                <div id="coin_chart_render"></div>
+            </div>
+            <!-- Transaction container--->
+            <div class="transaction_container">
+                <h3 class="transaction_header">Uw recente Transacties</h3>
+                <table class="transaction_table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!--- OrderBook interne markt---->
+            <div class="orderbook_container">
+                <div style="display: flex; justify-content: space-between">
+                <h3 class="orderbook_header">Intern orderbook: </h3>
+<!--                <button><span data-feather="bar-chart-2" href="../orderbook/orderbook.html"></span></button>-->
+                    </div>
+                    <div style="display: flex; width:100%; margin: auto; justify-content: center">
+                        <div>
+                            <p style="font-weight: 400; padding-top:10px">Kopen</p>
+                            <table class="orderbookbuy_table">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p style="padding-top:10px">Verkopen</p>
+                            <table class="orderbooksell_table">
+                                <thead></thead>
+                                <tbody></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+            <!--- Order container --->
+            <div class="order_container">
+                <h3 class="order_header">Uw openstaande orders</h3>
+                <table class="order_table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!---- confirm trade modal --->
+    <div id="popup-modal" class="modal">
+        <div class="modal_content">
+            <h1 class="modal_header">Bevestig uw transactie.</h1>
+            <div class="modal_success">
+                <div style="display: flex; flex-direction: column ">
+                    <p class="trade_info_confirmation"></p>
+                    <p class="trade_info_text">Klik hier onder om dit te bevestigen.</p>
+                    <button class="btn_buy_sell" id="btn_confirmation" type="button">Bevestigen </button>
+                </div>
+                <div>
+                    <img width="75px" src="../images/check-icon.svg" style="display: flex;">
+                </div>
+            </div>
+            <div class="modal_failure">
+                <h1> Helaas, er is iets misgegaan</h1>
+                <div style="display: flex">
+                    <i class="fa-solid fa-circle-xmark fa-10x" style="display: flex; color: var(--error-red-border)"></i>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="modal_footer">
+                <p></p>
+            </div>
+            <a href="#" class="modal_close">&times;</a>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer">
+    <ul>
+    <li class="gg-copyright">©</li>
+    <li class="copyright-name">THE PIRATE BANK</li>
+    </ul>
+</footer>
+
+
+</body>
+</html>
+<!-- javascript imports are at the bottom  -->
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script type="module" src="../js/header.js"></script>
+<script type="module" src="../js/coinHandler.js"></script>
+<script type="module" src="../js/tradePage.js"></script>
+<script type="module" src="../js/tradePageChartRender.js"></script>
+
+
+
+
+
+
+

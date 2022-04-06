@@ -1,0 +1,487 @@
+
+@import 'global.css';
+
+/* css for whole page layout */
+.body {
+	display:flex;
+	align-items: center;
+	background-color: var(--light-yellow-brown);
+}
+
+p {
+	padding: 0px;
+}
+
+input {
+	padding-left: 10px;
+	font-size: 14px;
+}
+
+option {
+	cursor: pointer;
+	font-size: 16px;
+}
+
+select {
+	font-size: 16px;
+}
+
+/* Second navbar + items  */
+
+.second_navbar_container {
+	width: 100%;
+	background-color: var(--background-color-lightblue);
+}
+
+.second_navbar {
+	background-color: var(--background-color-lightblue);
+	align-self: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 33%;
+	margin: auto;
+}
+
+.coinSelectDropdown {
+	background-color: transparent;
+	padding: 10px;
+	border: none;
+	outline: none;
+	font-size: 20px;
+	font-weight: lighter;
+	/*margin-left: 75px;*/
+	cursor: pointer;
+	border-bottom: 2px solid var(--primary-color-light);
+}
+
+select.widthHeight::-webkit-scrollbar {
+	width: 20px;
+	height: 20px;
+}
+
+select.style::-webkit-scrollbar-track {
+	border: rgb(180, 180, 180);
+}
+
+select.style::-webkit-scrollbar-thumb {
+	background-color: var(--primary-color-light);
+	border: 1px solid rgb(193, 193, 193);
+	height: 20px;
+}
+
+
+.coinSelectDropdown:hover {
+	cursor: pointer;
+	/*pointer-events: auto;*/
+}
+
+.outer {
+	/* hidden on start*/
+	display: none;
+	background-color: var(--background-color-lightest);
+}
+
+
+.buy_page_container {
+	background-color: red;
+	max-width: 960px;
+	margin: 0 auto !important; 
+	float: none !important;
+}
+
+
+.buy_page_container_top {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	width: 100%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	margin-bottom: 25px;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.3;
+}
+
+/* css buy/sell container */
+
+.price_container {
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	color: var(--medium-grey);
+	margin-left: 50px;
+	height:625px;
+	width: 380px;
+	max-width: 400px;
+	padding: 25px
+}
+
+.price_container_header {
+	justify-content:space-evenly;
+	display: flex;
+}
+
+.btn_select_buysell {
+	justify-content: center;
+	background-color: transparent;
+	display: flex;
+	width: 100%;
+	font-weight: 500;
+	font-size: 15px;
+	border: none;
+	padding: 30px 20px;
+}
+
+.btn_select_buysell_active {
+		background-color: var(--background-color-lightblue) !important;
+		color: var(--primary-color-light);
+		border-bottom: 2px solid blue ;
+	}
+
+.price_saldo_element {
+	color: var(--medium-dark-grey);
+	padding: 30px 15px 15px;
+	font-size: 14px;
+	justify-content: space-between;
+	display: flex;
+	border-bottom: 1px solid var(--medium-grey);
+
+}
+
+.order_select {
+	padding: 10px;
+	border: 1px solid var(--medium-grey);
+}
+
+.order_select:focus-within {
+	border-color: var(--primary-color-light);
+}
+.text_valutacoin_styling {
+	font-size: 14px;
+	padding: 10px;
+	color:var(--medium-dark-grey)
+}
+
+.currency_value_select {
+	margin-left: 50px;
+	max-width: 25%;
+	text-align: end;
+	align-items: flex-end;
+	align-content: flex-end;
+
+}
+
+.price_rowparent {
+	padding: 15px;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid var(--light-grey);
+}
+
+.price_input_parent {
+	border: 1px solid var(--medium-grey);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 50px;
+	background-color: #FFFFFF;
+}
+
+.price_input_parent::placeholder {
+	color: var(--medium-grey);
+}
+
+.price_input_parent:focus-within{
+	border: 1px solid var(--primary-color-light) !important;
+}
+.valuta_container {
+	background-color:var(--medium-grey);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: center;
+	height: 50px;
+	width: 50px;
+}
+.selected_valuta_abbr {
+	padding-right: 15px;
+	color: var(--medium-dark-grey)
+}
+
+.selected_coin_abbr {
+	max-width: 20%;
+	min-width: 20%;
+	padding-right: 15px;
+	color: var(--medium-dark-grey)
+}
+
+.input_field {
+	outline: none;
+	width: 100%;
+}
+.input_field:focus {
+	font-weight: bold;
+	color:var(--primary-color-light)
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.btn_buy_sell {
+	font-size: 16px;
+	font-weight: 500;
+	background-color: var(--primary-color-light);
+	border-radius: 10px;
+	border: none;
+	padding: 15px;
+	color: white;
+	align-self: center;
+	width: 100%;
+}
+
+.btn_buy_sell:hover {
+	background-color: #0024D4;
+}
+
+.error_messages {
+	background-color: rgb(255,232,232);
+	border: 1px solid red;
+	color: red;
+	display: none;
+	font-size: 16px;
+	margin: 10px auto auto;
+	padding: 10px 25px;
+	max-width: 250px;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+	transition: all .6s;
+	align-content: center;
+}
+
+.modal_content {
+	align-content: center;
+	justify-content: center;
+	border-radius: 4px;
+	margin: 15% auto;
+	position: relative;
+	width: 400px;
+	max-width: 90%;
+	background: #fff;
+	padding: 1em 2em;
+}
+
+.modal_footer {
+	text-align: right;
+}
+
+.modal_close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #585858;
+	text-decoration: none;
+}
+
+.modal_failure {
+	display: none;
+}
+
+.modal_success {
+	display: none;
+}
+
+.modal_header {
+	color: var(--dark-grey);
+}
+
+.trade_info_confirmation {
+	padding: 20px;
+}
+.trade_info_text {
+	padding: 20px;
+	color: var(--medium-dark-grey);
+}
+
+
+/* css container for the chart container */
+
+.chart_container {
+	width: 690px;
+	height: 470px;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	margin: 0px 50px 50px;
+}
+
+
+.chart_container_header {
+	padding: 15px 15px 15px 50px;
+	display: flex;
+	justify-content:space-between;
+	flex-direction: row;
+}
+
+.btn_chart {
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 5px;
+	background-color: transparent;
+	color: var(--medium-grey);
+	transition: transform 80ms ease-in;
+}
+
+.btn_chart_hover:hover {
+    color: var(--primary-color-light);
+}
+.btn_chart_active {
+    background-color: var(--primary-color-light);
+    color:white;
+}
+.btn_chart_active_hover:hover {
+	color: white;
+}
+
+.chart_container_header_top {
+	padding: 5px;
+	color: black;
+	font-size: 20px;
+}
+
+.chart_container_header_bot {
+	padding: 5px;
+	color: var(--medium-grey);
+}
+
+.axisChart line {
+	stroke: var(--medium-grey);
+}
+
+.axisChart path {
+	stroke: var(--medium-grey);
+}
+
+.axisChart text {
+	fill: var(--medium-grey);
+	font-family: "Maven Pro", sans-serif;
+}
+
+
+.order_container, .transaction_container, .orderbook_container {
+	min-width: 380px;
+	max-width: 690px;
+	min-height: 235px;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	margin: 50px;
+	padding: 15px;
+
+}
+
+/*on startup order container is hidden*/
+.order_container {
+	display: none;
+}
+
+.order_header, .transaction_header, .orderbook_header {
+	color:var(--dark-grey);
+	font-weight: 400;
+	padding: 15px;
+	border-left: var(--primary-color-light) 2px solid;
+
+}
+
+.order_table, .transaction_table, .orderbookbuy_table, .orderbooksell_table {
+	box-sizing: border-box;
+	width: 100%;
+
+}
+
+.orderbookbuy_table, .orderbooksell_table {
+	justify-content: space-between;
+	align-content: start;
+	box-sizing: border-box;
+	margin: auto;
+
+}
+
+.order_table th, .transaction_table th, .orderbooksell_table th, .orderbookbuy_table th {
+	padding: 10px 20px;
+	margin:auto;
+	color:var(--dark-grey);
+	font-weight: 500;
+
+}
+
+.order_table td, .transaction_container td, .orderbookbuy_table td, .orderbooksell_table td {
+	color: var(--medium-dark-grey);
+	align-items: center;
+	text-align: center;
+	justify-content: end;
+	padding: 5px 0px;
+}
+
+.confirmation_server_modal {
+	height:40px;
+	width: 400px;
+	background-color: white;
+	padding: 5px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--dark-grey);
+	text-align: center;
+	margin-top: 15px;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	border-left: var(--primary-color-light) 4px solid;
+}
+
+.conf_error_hidden {
+	animation: fadeOut 3s;
+	animation-delay: 2s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut{
+	from {visibility: visible}
+	to	{display: block;
+		visibility: hidden}
+
+}
+
+footer {
+	display: flex;
+	background-color: var(--light-yellow-brown);
+	width: 100%;
+	height: 120px;
+}
+
+
+@media only screen and (min-width: 401px) and (max-width: 1024px) {
+	.chart_container { display: none; }
+	.buy_page_container_top {flex-direction: column}				/* hide it elsewhere */
+}
+
+
+
+
