@@ -149,8 +149,14 @@ body {
     padding: 1em;
 }
 
+@media screen and (max-width: 1250px) {
+    .logo-text{
+        display: none;
+    }
+}
 
-@media screen and (min-width: 600px) {
+
+@media screen and (min-width: 800px) {
     #navbar-toggle,
     #navbar-toggle[aria-expanded="true"] {
         display: none;

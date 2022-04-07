@@ -35,7 +35,7 @@ public class CustomerDAO extends CustomerAbstractDAO {
         String sql = "Select * From customer";
         List<Customer> result = new ArrayList<>();
         try {
-            result = jdbcTemplate.query(sql, new CustomerDAO.CustomerRowMapper());
+            result = jdbcTemplate.query(sql, new CustomerRowMapper());
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             result.isEmpty();
         }

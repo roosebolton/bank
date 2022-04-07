@@ -15,7 +15,7 @@ import java.util.Date;
 public class JWTCreator {
     private final static String SIGNATURE_SECRET = "c34caa3ac31d43d5b2e98d30d4cf9b82";
     private final static String ISSUER_TOKEN="ThePirateBank";
-    private final static long JWT_EXPIRY_TIME_MIN = 20;
+    private final static long JWT_EXPIRY_TIME_MIN = 30;
 
     private final AdminService adminService;
 

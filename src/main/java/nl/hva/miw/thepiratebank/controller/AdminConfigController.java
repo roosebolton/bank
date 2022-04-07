@@ -7,7 +7,9 @@ import nl.hva.miw.thepiratebank.domain.User;
 import nl.hva.miw.thepiratebank.domain.Wallet;
 import nl.hva.miw.thepiratebank.domain.transfer.*;
 import nl.hva.miw.thepiratebank.service.*;
+import nl.hva.miw.thepiratebank.service.userCustomer.UserCustomerService;
 import nl.hva.miw.thepiratebank.utilities.authorization.token.AccessTokenService;
+import nl.hva.miw.thepiratebank.utilities.exceptions.ConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +23,15 @@ public class AdminConfigController {
      private AccountService accountService;
      private WalletService walletService;
      private AdminService adminService;
-     private AccessTokenService accessTokenService;
-     private UserService userService;
-     private CustomerService customerService;
+     private UserCustomerService userCustomerService;
 
      @Autowired
      public AdminConfigController(AccountService accountService, WalletService walletService,
-                                  AdminService adminService, AccessTokenService accessTokenService,
-                                  UserService userService, CustomerService customerService){
+                                  AdminService adminService, UserCustomerService userCustomerService){
          this.accountService = accountService;
          this.walletService = walletService;
          this.adminService = adminService;
-         this.accessTokenService = accessTokenService;
-         this.userService = userService;
-         this.customerService = customerService;
+         this.userCustomerService = userCustomerService;
      }
 
     @GetMapping("admin/transactionfee")
@@ -63,9 +60,10 @@ public class AdminConfigController {
     @GetMapping("admin/userdata/{userId}")
     @ResponseBody
     public ResponseEntity<?> getUserDataById(@PathVariable int userId){
-        User user = userService.getUserByUserId(userId);
+        User user = userCustomerService.getUserService().getUserByUserId(userId);
         if(user==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Er is geen gebruiker met deze id");
+            throw new ConflictException("Er is geen gebruiker met deze id");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Er is geen gebruiker met deze id");
         }
         else{
         BigDecimal transactionFee = adminService.getTransactionFee();
@@ -78,9 +76,9 @@ public class AdminConfigController {
     @GetMapping("admin/userdataname/{userName}")
     @ResponseBody
     public ResponseEntity<?> getUserDataByUserName(@PathVariable String userName){
-        User user = userService.getUserByUserName(userName);
+        User user = userCustomerService.getUserService().getUserByUserName(userName);
         if(user==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Er is geen gebruiker met deze id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Er is geen gebruiker met deze gebruikersnaam");
         }
         else{
             BigDecimal transactionFee = adminService.getTransactionFee();
@@ -99,7 +97,7 @@ public class AdminConfigController {
        else if(adminAccountBalanceDTO.getBalance().compareTo(BigDecimal.ZERO)<0){
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account balance mag niet negatief zijn.");
        }
-         User user = userService.getUserByUserName(adminAccountBalanceDTO.getUserName());
+         User user = userCustomerService.getUserService().getUserByUserName(adminAccountBalanceDTO.getUserName());
          Account toChangeAccount = accountService.getAccountById(user.getUserId());
          Customer customer = walletService.getCustomerWithWallet(toChangeAccount.getCustomer());
          Account newAccount = new Account(customer,adminAccountBalanceDTO.getBalance());
@@ -116,7 +114,7 @@ public class AdminConfigController {
         else if(adminAssetAmountDTO.getAssetAmount().compareTo(BigDecimal.ZERO)<0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Asset hoeveelheid mag niet negatief zijn.");
         }
-        User user = userService.getUserByUserName(adminAssetAmountDTO.getUserName());
+        User user = userCustomerService.getUserService().getUserByUserName(adminAssetAmountDTO.getUserName());
         int userId = user.getUserId();
         adminService.updateAssetByUserId(userId,adminAssetAmountDTO.getAssetName(),adminAssetAmountDTO.getAssetAmount());
         return ResponseEntity.ok().body("Voor asset: "  + adminAssetAmountDTO.getAssetName() + " bij user: "+ adminAssetAmountDTO.getUserName() +" hoeveelheid gewijzigd naar: " + adminAssetAmountDTO.getAssetAmount());
@@ -125,7 +123,7 @@ public class AdminConfigController {
     @GetMapping(value="admin/assets/{userId}")
     @ResponseBody
     public ResponseEntity<WalletDTO> getAssetsInWallet(@PathVariable int userId){
-        Customer customer = customerService.getCustomerById(userId);
+        Customer customer = userCustomerService.getCustomerService().getCustomerById(userId);
         Customer customerWithWallet = walletService.getCustomerWithWallet(customer);
         if (customerWithWallet.getWallet() != null)
             return ResponseEntity.ok().body(new WalletDTO(customerWithWallet.getWallet()));

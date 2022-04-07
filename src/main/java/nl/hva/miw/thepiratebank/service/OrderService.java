@@ -49,25 +49,18 @@ public class OrderService {
 
 
     public void verifyOrderDTO(OrderDTO orderDTO, HttpServletRequest request) {
-        if (!verifyAuthorizationOrder(orderDTO, request)) {
-            throw new ConflictException("Authorisatie van gebruiker onjuist.");
-        }
+        if (!verifyAuthorizationOrder(orderDTO, request)) throw new ConflictException("Authorisatie van gebruiker onjuist.");
         Valuta valutaData = valutaService.currencyConversionMap.get(orderDTO.getValutaType());
         Order mappedOrder = OrderDTOtoOrderMapper.mapOrder(orderDTO);
         mappedOrder.setAmount(mappedOrder.getAmount().divide(valutaData.getCurrentExchangeRate(), RoundingMode.HALF_UP));
         mappedOrder.setAsset(rootRepository.getAssetByName(orderDTO.getAsset()).orElseThrow(()-> new ConflictException("Type asset van order niet gevonden.")));
         mappedOrder.setUser(rootRepository.getCustomerWithWallet(mappedOrder.getUser()));
 
-        if(!checkOrderValidAmount(mappedOrder)) {
-            throw new ConflictException("Onvoldoende hoeveelheid in portefeuille.");
-        } else {
-            saveOrder(mappedOrder);
-            marketService.matchOrderToOrderBook(mappedOrder);
-        }
-    }
+        if(!hasSufficientBalance(mappedOrder)) throw new ConflictException("Onvoldoende geld in de portefeuille.");
+        if(!hasSufficientNumberofAssets(mappedOrder)) throw new ConflictException("Onvoldoende hoeveelheid assets in portefeuille.");
 
-    public boolean checkOrderValidAmount(Order order) {
-       return(hasSufficientBalance(order)&&hasSufficientNumberofAssets(order));
+        saveOrder(mappedOrder);
+        marketService.matchOrderToOrderBook(mappedOrder);
     }
 
     public boolean hasSufficientNumberofAssets(Order order) {

@@ -1,4 +1,4 @@
-package nl.hva.miw.thepiratebank.service.token;
+package nl.hva.miw.thepiratebank.service.Token;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.interfaces.DecodedJWT;

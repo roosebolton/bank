@@ -61,10 +61,8 @@ public class Auctioneer implements MarketObserver{
             Iterator<Order> it = buyorders.iterator();
             while (it.hasNext()) {
                 Order order = it.next();
-                System.out.println("iterator"+order);
                 Boolean buyorderfulfilled = compareOrder(order);
                 if(buyorderfulfilled) {
-                    System.out.println(buyorderfulfilled);
                     it.remove();
                 }
             }
@@ -84,16 +82,13 @@ public class Auctioneer implements MarketObserver{
         Order buyOrderOriginal = order;
         Order sellOrderOriginal = filteredSell.stream().findFirst().get();
         if ( order.getLimitPrice().compareTo(sellOrderOriginal.getLimitPrice()) >= 0) {
-            System.out.println("limit price is gelijk of groter");
             // dan hoeveelheid checken,als buyorder amount groter is dan sellorder amount
             BigDecimal amountFilled =  order.getAmount().min(sellOrderOriginal.getAmount());
-            System.out.println("amount filled"+ amountFilled);
             BigDecimal difference = order.getAmount().subtract(sellOrderOriginal.getAmount());
             Transaction matchedTransaction = transactionService.buildTransaction(buyOrderOriginal, sellOrderOriginal, amountFilled);
             // check if orders is still valid
 
             if (!transactionService.hasSufficientBalance(matchedTransaction)) {
-                System.out.println("not enough money");
                 return false;
             }
             if(!transactionService.hasSufficientNumberofAssets(matchedTransaction)) {
@@ -102,21 +97,17 @@ public class Auctioneer implements MarketObserver{
             }
 
             if(!transactionService.isValidTransaction(matchedTransaction)){
-                System.out.println(" geen valid transaction");
                 return false;
             }
             transactionService.saveTransaction(matchedTransaction);
 
             if (difference.signum()>0) {
-                System.out.println(sellOrderOriginal);
-                System.out.println("buyorder is groter dan sell order");
                     sellOrders.remove(0);
                     removeOrderFromDB(sellOrderOriginal);
                     order.setAmount(buyOrderOriginal.getAmount().subtract(amountFilled));
                     update(order);
             }
             if (difference.signum()<0) {
-                System.out.println("sellorder is groter dan buyorder");
                     sellOrders.get(0).setAmount(sellOrderOriginal.getAmount().subtract(amountFilled));
                     removeOrderFromDB(order);
                     update(sellOrders.get(0));

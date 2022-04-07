@@ -73,7 +73,6 @@ public class WalletService {
     public void creditAssetsInWallet (Customer buyer, String assetName, BigDecimal amount) {
         int userId = buyer.getUserId();
         Wallet buyerWallet = rootRepository.getCustomerWithWallet(buyer).getWallet();
-        System.out.println(buyerWallet);
         if (buyerWallet.getAssetsInWallet().containsKey(rootRepository.getAssetByName(assetName).get())){
             BigDecimal newAmount = getAmountOfSingleAssetInWallet(userId, assetName).add(amount);
             rootRepository.updateWalletAfterTransaction(userId, assetName, newAmount);

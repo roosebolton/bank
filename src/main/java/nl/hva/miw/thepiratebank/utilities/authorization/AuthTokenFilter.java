@@ -34,7 +34,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 httpServletResponse.setHeader("Location","/index.html");
               httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"The token is not valid.");
-                System.out.println(httpServletResponse.containsHeader("Location"));
             }
         } else {
             httpServletResponse.setHeader("Location","/index.html");

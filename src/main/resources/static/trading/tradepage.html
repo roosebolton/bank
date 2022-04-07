@@ -18,7 +18,7 @@
     <nav class="navbar-container container">
         <a href="/" class="home-link">
             <div class="navbar-logo"><img width="50px" class="navbar_sub_links_img" src="../images/chest.svg" style="display: flex;"></div>
-            <h1 class="logo-text" id="logotext">THE PIRATEBANK</h1>
+            <h1 class="logo-text" id="logotext">THE PIRATE BANK</h1>
         </a>
         <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
             <span class="icon-bar"></span>
@@ -28,10 +28,9 @@
         <div id="navbar-menu" aria-labelledby="navbar-toggle">
             <ul class="navbar-links">
                 <li class="navbar-item"></span><a class="navbar-link" href="/index.html"><span data-feather="anchor"></span> Home</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/about/about.html"><span data-feather="users"></span> About</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/trading/tradepage.html"><span data-feather="briefcase"></span> Trade</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="../wallet/wallet.html"><span data-feather="square"></span> Wallet</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="../orderbook/orderbook.html"><span data-feather="bar-chart-2"></span> Orderbook</a></li>
-                <li class="navbar-item"><a class="navbar-link" id="logout" "><span data-feather="log-out"></span> Uitloggen</a></li>
+                <li class="navbar-item"><a class="navbar-link" id="logout" ><span data-feather="log-out"></span> Uitloggen</a></li>
             </ul>
         </div>
     </nav>
@@ -79,7 +78,7 @@
                 <select name="orderType" class="order_select">
                     <option value="">Kies uw ordertype</option>
                     <option selected="selected" value="marketorder">Marktorder</option>
-                    <option disabled value="limitorder">Limietorder</option>
+<!--                    <option disabled value="limitorder">Limietorder</option>-->
                     <option value="limitorderinternal">Order interne markt</option>
                 </select>
                 <input type="number" disabled class="currency_value_select"  step="any" min="0" placeholder="prijs"/>
@@ -159,6 +158,15 @@
                 </table>
             </div>
 
+            <!--- Order container --->
+            <div class="order_container">
+                <h3 class="order_header">Uw openstaande orders</h3>
+                <table class="order_table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
             <!--- OrderBook interne markt---->
             <div class="orderbook_container">
                 <div style="display: flex; justify-content: space-between">
@@ -184,17 +192,8 @@
                     </div>
             </div>
 
-            <!--- Order container --->
-            <div class="order_container">
-                <h3 class="order_header">Uw openstaande orders</h3>
-                <table class="order_table">
-                    <thead></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
         </div>
     </div>
-
     <!---- confirm trade modal --->
     <div id="popup-modal" class="modal">
         <div class="modal_content">
@@ -228,8 +227,10 @@
 </div>
 <footer class="footer">
     <ul>
-    <li class="gg-copyright">©</li>
-    <li class="copyright-name">THE PIRATE BANK</li>
+        <div style="display: flex">
+            <li class="gg-copyright">©</li>
+            <li class="copyright-name">THE PIRATE BANK</li>
+        </div>
     </ul>
 </footer>
 

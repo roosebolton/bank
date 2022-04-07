@@ -32,7 +32,6 @@ public class OrderDAO extends OrderAbstractDAO {
         try {
             orders = jdbcTemplate.query(SQL, new OrderRowmapper());
         } catch (DataAccessException exception) {
-            System.out.println(exception.getMessage());
             log.debug(exception.getMessage());
         }
         return orders;
@@ -45,7 +44,6 @@ public class OrderDAO extends OrderAbstractDAO {
             jdbcTemplate.update(connection -> insertOrderStatement(order,connection),keyHolder);
             order.setOrderId(keyHolder.getKey().intValue());
         } catch (DataAccessException exception){
-            System.out.println(exception.getMessage());
             log.debug(exception.getMessage());
         }
     }
@@ -73,7 +71,6 @@ public class OrderDAO extends OrderAbstractDAO {
                     order.getTimeOrderPlaced(),
                     order.getOrderId());
         } catch (DataAccessException exception) {
-            System.out.println(exception);
             log.debug(exception.getMessage());
         }
     }
@@ -94,7 +91,6 @@ public class OrderDAO extends OrderAbstractDAO {
         try {
             orders = jdbcTemplate.query(SQL, new OrderRowmapper(),userid);
         } catch (DataAccessException exception) {
-            System.out.println(exception.getMessage());
             log.debug(exception.getMessage());
         }
         return orders;
@@ -113,7 +109,6 @@ public class OrderDAO extends OrderAbstractDAO {
         ps.setBigDecimal(4,order.getAmount());
         ps.setBigDecimal(5,order.getLimitPrice());
         ps.setTimestamp(6,order.getTimeOrderPlaced());
-        System.out.println(ps.toString());
         return ps;
     }
 

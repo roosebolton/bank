@@ -1,4 +1,4 @@
-//
+package nl.hva.miw.thepiratebank.controller;//
 //package nl.hva.miw.thepiratebank.controller;
 //
 //import nl.hva.miw.thepiratebank.controller.AssetConsumerController;

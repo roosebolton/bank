@@ -5,11 +5,7 @@
     --background-color-lightest:  #F6F8FB;
     --background-color-lightblue: #F3F7FF;
 
-    /*--background-color-lightest: #F6F8FB;*/
-    /*--background-color-lightblue: #F3F7FF;*/
-
-
-    background-color: #F8FBFE;
+    --background-color: #F8FBFE;
     --light-yellow-brown: #EFECDF;
 
     --light-grey: #F5F5F5;

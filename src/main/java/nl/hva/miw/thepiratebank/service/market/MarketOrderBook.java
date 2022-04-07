@@ -29,8 +29,7 @@ public class MarketOrderBook<Asset> {
         } else {
             sellOrders.add(order);}
 
-        System.out.println(this);
-        System.out.println("sellorders"+sellOrders);
+
         notifyMarketObserver(this);
     }
 

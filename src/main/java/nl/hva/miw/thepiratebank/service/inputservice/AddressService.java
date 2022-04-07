@@ -3,11 +3,13 @@ package nl.hva.miw.thepiratebank.service.inputservice;
 import nl.hva.miw.thepiratebank.domain.transfer.CustomerDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
 public class AddressService {
     private static final int[] MAX_FIELD_LENGTHS = {6, 10, 10, 100, 30};
+
 
     public static String AddressValid (CustomerDTO customerDTO) {
         StringBuilder stringBuilder = new StringBuilder();

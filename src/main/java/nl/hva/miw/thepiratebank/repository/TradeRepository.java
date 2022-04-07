@@ -57,7 +57,6 @@ public class TradeRepository {
 
     public List<Transaction> findBuyTransactionsByUserId(Integer id) {
         List<Transaction> transactionlist = transactionDAO.findBuyTransactionsByUserId(id);
-        System.out.println(transactionlist);
         transactionlist.stream().map(e -> buildTransactionAssociations(e)).collect(Collectors.toList());
         return transactionlist;
     }
@@ -76,7 +75,6 @@ public class TradeRepository {
                 .orElseThrow(() -> new ConflictException("An error occured building transactions.")));
         transaction.setAsset(rootRepository.findAssetOfTransaction(transaction.getTransactionId())
                 .orElseThrow(() -> new ConflictException("An error occured building transactions.")));
-        System.out.println(transaction);
         return transaction;
     }
 

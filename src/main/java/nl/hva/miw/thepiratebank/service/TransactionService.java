@@ -69,21 +69,17 @@ public class TransactionService {
     }
 
     public boolean isDifferentAccount(Transaction transaction) {
-        System.out.println("is different account"+!(transaction.getBuyer().getUserId() == (transaction.getSeller().getUserId())));
         return !(transaction.getBuyer().getUserId() == transaction.getSeller().getUserId());
     }
 
     public boolean hasSufficientBalance(Transaction transaction) {
         Customer buyer = rootRepository.getCustomerWithAccount(transaction.getBuyer());
-        System.out.println("is sufficient balance"+(transaction.getValue().add(transaction.getTransactionCost()).compareTo(buyer.getAccount().getBalance()) <= 0));
         return (transaction.getValue().add(transaction.getTransactionCost()).compareTo(buyer.getAccount().getBalance()) <= 0);
     }
 
     public boolean hasSufficientNumberofAssets(Transaction transaction) {
-        System.out.println("enoughassets");
         BigDecimal assetInWallet = walletService.getAmountOfSingleAssetInWallet(transaction.getSeller().getUserId(),
                 transaction.getAsset().getName());
-        System.out.println((assetInWallet.compareTo(transaction.getAssetAmount()) >= 0));
         return (assetInWallet.compareTo(transaction.getAssetAmount()) >= 0);
     }
 
@@ -161,8 +157,6 @@ public class TransactionService {
     }
 
     public boolean verifyAuthorizationTransaction(TransactionDTO transactionDTO, HttpServletRequest request) {
-        System.out.println(transactionDTO);
-        System.out.println(request);
          int userId = accessTokenService.getTokenFromRequest(request).orElseThrow(() -> new AuthorizationException("Authorization of user failed"));
            return ((transactionDTO.getBuyer() == 0 && transactionDTO.getSeller() == userId)
                     || (transactionDTO.getBuyer() == userId && transactionDTO.getSeller() == 0));

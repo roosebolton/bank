@@ -5,18 +5,17 @@
     --navbar-bg-contrast:  #0051FF;
 }
 * {
-
     margin: 0;
     padding: 0;
 }
 .navbar-logo{
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 .logo-text {
     letter-spacing: -0.10em;
     font-weight: lighter;
     display: flex;
-    font-size: 26px;
+    font-size: 45px;
     padding-top: 10px;
     padding-left: 20px;
 }
@@ -75,11 +74,9 @@
     background-color: var(--navbar-bg-contrast);
 }
 .navbar-logo {
-    background-color: var(--navbar-text-color-focus);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    margin-right: 0.5em;
+    width: 50px;
+    height: 50px;
+    margin-right: 0.5em
 }
 #navbar-toggle {
     cursor: pointer;

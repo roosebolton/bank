@@ -1,4 +1,4 @@
-//package nl.hva.miw.thepiratebank.service;
+package nl.hva.miw.thepiratebank.service;//package nl.hva.miw.thepiratebank.service;
 //
 //import nl.hva.miw.thepiratebank.domain.Customer;
 //import nl.hva.miw.thepiratebank.domain.transfer.CustomerDTO;

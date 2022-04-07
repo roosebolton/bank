@@ -122,10 +122,9 @@ body {
 .logo-text {
     position: relative;
     font-weight: lighter;
-    font-size: 2.8vw;
+    font-size: 2vw;
     font-family: Inter, Helvetica, sans-serif;
     text-align: left;
-    padding-right: 20rem;
     padding-top: 2px;
     min-width: 40rem
 }

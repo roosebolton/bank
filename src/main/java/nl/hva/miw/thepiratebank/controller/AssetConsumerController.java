@@ -50,12 +50,10 @@ public class AssetConsumerController {
         }
     }
 
-//@PostConstruct
+  //@PostConstruct
     public void onServerBootGetAssetHistory () {
-        System.out.println("Filling up database with records");
         AssetList.AVAILABLE_ASSET_COINS_MAP.entrySet().stream().forEach(e -> assetDAO.create(new Asset(e.getKey(),e.getValue())));
         AssetList.AVAILABLE_ASSET_COINS_MAP.entrySet().stream().forEach(e -> saveCoinHistory(e.getKey()));
-        System.out.println("Database fill completed");
     }
 
     public void saveCoinHistory (String coin) {
