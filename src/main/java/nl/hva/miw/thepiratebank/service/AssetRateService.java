@@ -12,6 +12,8 @@ import nl.hva.miw.thepiratebank.domain.transfer.calculation.IntervalCalculationP
 import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.assetrate.AssetRateDAO;
 import nl.hva.miw.thepiratebank.domain.transfer.AssetPriceIntervalListDTO;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRateRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRootRepository;
 import nl.hva.miw.thepiratebank.service.dtomapper.AssetPriceIntervalDTOMaker;
 import nl.hva.miw.thepiratebank.utilities.exceptions.ConflictException;
 import org.springframework.stereotype.Service;
@@ -28,12 +30,12 @@ import java.util.stream.Collectors;
 public class AssetRateService {
     private final AssetRateDAO assetRateDAO;
     private final ValutaService valutaService;
-    private final RootRepository rootRepository;
+    private final AssetRootRepository assetRootRepository;
 
-    public AssetRateService(AssetRateDAO assetRateDAO, ValutaService valutaService, RootRepository rootRepository) {
+    public AssetRateService(AssetRateDAO assetRateDAO, ValutaService valutaService,AssetRootRepository assetRootRepository) {
         this.assetRateDAO = assetRateDAO;
         this.valutaService = valutaService;
-        this.rootRepository = rootRepository;
+        this.assetRootRepository = assetRootRepository;
     }
 
     public void create(AssetRate assetRate) {
@@ -50,7 +52,7 @@ public class AssetRateService {
     }
 
     public List<Asset> getAvailableAssets() {
-        return rootRepository.getAllAssets().stream().collect(Collectors.toList());
+        return assetRootRepository.getAllAssets().stream().collect(Collectors.toList());
     }
 
     /** Method getAssetHistory
@@ -62,7 +64,7 @@ public class AssetRateService {
      public AssetHistoryDTO getAssetHistory(String valuta, String name ) {
         AssetHistoryDTO coinDTO = new AssetHistoryDTO.AssetHistoryDTOBuilder()
                 .valuta(valutaService.getValuta(valuta))
-                .asset(rootRepository.getAssetWithFullHistory(name).orElseThrow(() -> new ConflictException("No history of coin found.")))
+                .asset(assetRootRepository.getAssetWithFullHistory(name).orElseThrow(() -> new ConflictException("No history of coin found.")))
                 .build();
         return coinDTO;
     }
@@ -100,11 +102,11 @@ public class AssetRateService {
     public List<Asset> getRequestedList (List<String> requestedIds) {
         // if all is in keyword -> get all assets, otherwise get assets in list
         if (requestedIds.contains("all")) {
-            return getAvailableAssetIDs().stream().map(assetname -> rootRepository.getAssetByName(assetname).orElseThrow()).collect(Collectors.toList());
+            return getAvailableAssetIDs().stream().map(assetname -> assetRootRepository.getAssetByName(assetname).orElseThrow()).collect(Collectors.toList());
         } else {
             List<Asset> assetlist = new ArrayList();
             for (String id : requestedIds) {
-                Optional<Asset> asset = rootRepository.getAssetByName(id);
+                Optional<Asset> asset = assetRootRepository.getAssetByName(id);
                 if (asset.isPresent()) {
                     assetlist.add(asset.get());
                 }

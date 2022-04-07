@@ -9,6 +9,8 @@ import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.TradeRepository;
 import nl.hva.miw.thepiratebank.domain.Order;
 
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.CustomerRootRepository;
 import nl.hva.miw.thepiratebank.utilities.authorization.token.AccessTokenService;
 import nl.hva.miw.thepiratebank.utilities.exceptions.AuthorizationException;
 import nl.hva.miw.thepiratebank.utilities.exceptions.InvalidJsonInputException;
@@ -33,9 +35,11 @@ public class TransactionService {
     private final AccountService accountService;
     private final AdminService adminService;
     private final AssetRateService assetRateService;
+    private final AssetRootRepository assetRootRepository;
+    private final CustomerRootRepository customerRootRepository;
 
     @Autowired
-    public TransactionService(TradeRepository tradeRepository, AccessTokenService accessTokenService, RootRepository rootRepository, WalletService walletService,
+    public TransactionService(CustomerRootRepository customerRootRepository, AssetRootRepository assetRootRepository, TradeRepository tradeRepository, AccessTokenService accessTokenService, RootRepository rootRepository, WalletService walletService,
                               AccountService accountService, AdminService adminService, AssetRateService assetRateService) {
         this.tradeRepository = tradeRepository;
         this.accessTokenService = accessTokenService;
@@ -44,6 +48,8 @@ public class TransactionService {
         this.accountService = accountService;
         this.adminService = adminService;
         this.assetRateService = assetRateService;
+        this.assetRootRepository = assetRootRepository;
+        this.customerRootRepository = customerRootRepository;
     }
 
     public boolean isValidErrorMessage(Transaction transaction) {
@@ -96,11 +102,11 @@ public class TransactionService {
             throw new InvalidJsonInputException();
 
         }
-        Asset asset = rootRepository.getAssetByName(transactionDTO.getAssetname()).orElseThrow(()->new ConflictException("Asset of transaction not found."));
+        Asset asset = assetRootRepository.getAssetByName(transactionDTO.getAssetname()).orElseThrow(()->new ConflictException("Asset of transaction not found."));
 
         Transaction transaction = new Transaction.TransactionBuilder()
-                .buyer(rootRepository.getCustomer(transactionDTO.getBuyer()))
-                .seller(rootRepository.getCustomer(transactionDTO.getSeller()))
+                .buyer(customerRootRepository.getCustomer(transactionDTO.getBuyer()))
+                .seller(customerRootRepository.getCustomer(transactionDTO.getSeller()))
                 .asset(asset)
                 .assetAmount(transactionDTO.getAssetamount())
                 .value(assetRateService.getCurrentValue(asset.getName()).multiply(transactionDTO.getAssetamount()))

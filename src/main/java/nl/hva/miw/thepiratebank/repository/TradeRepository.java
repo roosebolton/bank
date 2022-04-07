@@ -2,6 +2,10 @@ package nl.hva.miw.thepiratebank.repository;
 
 import nl.hva.miw.thepiratebank.domain.*;
 import nl.hva.miw.thepiratebank.repository.order.OrderDAO;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRateRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.CustomerRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.UserRootRepository;
 import nl.hva.miw.thepiratebank.repository.transaction.TransactionDAO;
 import nl.hva.miw.thepiratebank.domain.Order;
 import nl.hva.miw.thepiratebank.utilities.exceptions.ConflictException;
@@ -21,13 +25,16 @@ public class TradeRepository {
 
     private final TransactionDAO transactionDAO;
     private final OrderDAO orderDAO;
+    private final AssetRootRepository assetRootRepository;
     private final RootRepository rootRepository;
 
 
-    public TradeRepository(TransactionDAO transactionDAO, OrderDAO orderDAO, RootRepository rootRepository) {
+    public TradeRepository(TransactionDAO transactionDAO, OrderDAO orderDAO, RootRepository rootRepository,AssetRootRepository assetRootRepository,
+                           CustomerRootRepository customerRootRepository) {
         this.transactionDAO = transactionDAO;
         this.orderDAO = orderDAO;
         this.rootRepository = rootRepository;
+        this.assetRootRepository = assetRootRepository;
     }
 
     /**
@@ -73,7 +80,7 @@ public class TradeRepository {
                 .orElseThrow(() -> new ConflictException("An error occured building transactions.")));
         transaction.setSeller(rootRepository.findSellerOfTransaction(transaction.getTransactionId())
                 .orElseThrow(() -> new ConflictException("An error occured building transactions.")));
-        transaction.setAsset(rootRepository.findAssetOfTransaction(transaction.getTransactionId())
+        transaction.setAsset(assetRootRepository.findAssetOfTransaction(transaction.getTransactionId())
                 .orElseThrow(() -> new ConflictException("An error occured building transactions.")));
         return transaction;
     }
@@ -125,7 +132,7 @@ public class TradeRepository {
 
     public Order buildOrderAssociations(Order order) {
         order.setUser(rootRepository.findCustomerOfOrder(order.getOrderId()).get());
-        order.setAsset(rootRepository.findAssetOfOrder(order.getOrderId()).get());
+        order.setAsset(assetRootRepository.findAssetOfOrder(order.getOrderId()).get());
         return order;
     }
 }

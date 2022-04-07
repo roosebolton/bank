@@ -6,6 +6,7 @@ import nl.hva.miw.thepiratebank.domain.Order;
 import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.TradeRepository;
 import nl.hva.miw.thepiratebank.domain.transfer.OrderBookSumDTO;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRootRepository;
 import nl.hva.miw.thepiratebank.utilities.exceptions.ConflictException;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +20,21 @@ public class MarketService {
     private List<MarketOrderBook<Asset>> orderBooks;
     private final Auctioneer auctioneer;
     private final TradeRepository tradeRepository;
+    private final AssetRootRepository assetRootRepository;
 
-    public MarketService(RootRepository rootReposit, Auctioneer auction, TradeRepository tradeRepo) {
+    public MarketService(AssetRootRepository assetRootRepository, RootRepository rootReposit, Auctioneer auction, TradeRepository tradeRepo) {
         this.auctioneer = auction;
         this.tradeRepository = tradeRepo;
         this.orderBooks = new ArrayList<>();
         this.rootRepository = rootReposit;
+        this.assetRootRepository = assetRootRepository;
         makeOrderBooks();
         addObserverToOrderBooks();
         loadMarketData();
     }
 
     public void makeOrderBooks() {
-        this.orderBooks = rootRepository.getAllAssets().stream().map(asset -> new MarketOrderBook<>(asset)).collect(Collectors.toList());
+        this.orderBooks = assetRootRepository.getAllAssets().stream().map(asset -> new MarketOrderBook<>(asset)).collect(Collectors.toList());
     }
 
     public void matchOrderToOrderBook ( Order order) {
@@ -87,7 +90,7 @@ public class MarketService {
         if(!AssetList.AVAILABLE_ASSET_COINS_MAP.containsKey(asset)) {
             return null;
         }
-        MarketOrderBook orderBook= getOrderBook(rootRepository.getAssetByName(asset)
+        MarketOrderBook orderBook= getOrderBook(assetRootRepository.getAssetByName(asset)
                 .orElseThrow(()-> new ConflictException("Orderbook of " + asset +" not found.")));
         OrderBookSumDTO sumOrderbook= new OrderBookSumDTO.OrderbookBuilder().build(orderBook);
         return sumOrderbook;

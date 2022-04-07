@@ -4,6 +4,7 @@ package nl.hva.miw.thepiratebank.service;
 import nl.hva.miw.thepiratebank.domain.Account;
 import nl.hva.miw.thepiratebank.domain.Transaction;
 import nl.hva.miw.thepiratebank.repository.RootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AccountRootRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +15,18 @@ public class AccountService {
     private final int BANK = 1000;
     private final BigDecimal SHARE_PERCENTAGE= new BigDecimal(0.50);
 
-    private RootRepository rootRepository;
+    private AccountRootRepository accountRootRepository;
 
     @Autowired
-    public AccountService(RootRepository rootRepository) {
-        this.rootRepository = rootRepository;
+    public AccountService(AccountRootRepository accountRootRepository) {
+        this.accountRootRepository = accountRootRepository;
     }
 
     public Account getAccountById(int customerId){
-        return rootRepository.getAccountById(customerId);
+        return accountRootRepository.getAccountById(customerId);
     }
 
-    public void createAccount(Account account){rootRepository.createAccount(account);}
+    public void createAccount(Account account){accountRootRepository.createAccount(account);}
 
     public void doDebitAndCreditBalance(Transaction transaction){
         doDebitBalance(transaction);
@@ -34,10 +35,10 @@ public class AccountService {
     }
 
     public void doDebitBalance(Transaction transaction){
-        Account buyerAccount = rootRepository.getAccountById(transaction.getBuyer().getUserId());
+        Account buyerAccount = accountRootRepository.getAccountById(transaction.getBuyer().getUserId());
         BigDecimal balanceValueDebited = buyerAccount.getBalance().subtract(transaction.getValue());
         buyerAccount.setBalance(balanceValueDebited);
-        rootRepository.updateAccount(buyerAccount);
+        accountRootRepository.updateAccount(buyerAccount);
         if ((transaction.getBuyer().getUserId() != BANK) && (transaction.getSeller().getUserId() != BANK)){
             BigDecimal transactionCostSplitted = splitTransactionCost(transaction.getTransactionCost());
             doUpdateBalance(buyerAccount, transactionCostSplitted);
@@ -48,10 +49,10 @@ public class AccountService {
     }
 
     public void doCreditBalance(Transaction transaction){
-        Account sellerAccount = rootRepository.getAccountById(transaction.getSeller().getUserId());
+        Account sellerAccount = accountRootRepository.getAccountById(transaction.getSeller().getUserId());
         BigDecimal balanceValueCredited = sellerAccount.getBalance().add(transaction.getValue());
         sellerAccount.setBalance(balanceValueCredited);
-        rootRepository.updateAccount(sellerAccount);
+        accountRootRepository.updateAccount(sellerAccount);
         if ((transaction.getBuyer().getUserId() != BANK) && (transaction.getSeller().getUserId() != BANK)){
             BigDecimal transactionCostSplitted = splitTransactionCost(transaction.getTransactionCost());;
             doUpdateBalance(sellerAccount, transactionCostSplitted);
@@ -62,11 +63,11 @@ public class AccountService {
     }
 
     public void doCreditTransactioncostBankAccount(BigDecimal transactioncost){
-        Account bankAccount = rootRepository.getAccountById(BANK);
+        Account bankAccount = accountRootRepository.getAccountById(BANK);
         if (bankAccount != null) {
             BigDecimal bankBalanceTransactionCostCredited = bankAccount.getBalance().add(transactioncost);
             bankAccount.setBalance(bankBalanceTransactionCostCredited);
-            rootRepository.updateAccount(bankAccount);
+            accountRootRepository.updateAccount(bankAccount);
         }
     }
 
@@ -78,7 +79,7 @@ public class AccountService {
     public void doUpdateBalance(Account account, BigDecimal transactioncost){
         BigDecimal newBalance = account.getBalance().subtract(transactioncost);
         account.setBalance(newBalance);
-        rootRepository.updateAccount(account);
+        accountRootRepository.updateAccount(account);
     }
 
 }

@@ -3,6 +3,8 @@ package nl.hva.miw.thepiratebank.service;
 import nl.hva.miw.thepiratebank.domain.*;
 import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.WalletDAO;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.CustomerRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.UserRootRepository;
 import nl.hva.miw.thepiratebank.service.dtomapper.CustomerDTOtoCustomerMapper;
 import nl.hva.miw.thepiratebank.service.inputservice.*;
 import nl.hva.miw.thepiratebank.domain.transfer.CustomerDTO;
@@ -15,26 +17,28 @@ import java.util.TreeMap;
 
 @Service
 public class CustomerService {
-    private final RootRepository rootRepository;
     private final BcryptHashService hashService;
     private final ExistingUserService existingUserService;
     private final AccountService accountService;
     private final WalletDAO walletDAO;
+    private final CustomerRootRepository customerRootRepository;
+    private final UserRootRepository userRootRepository;
 
     @Autowired
-    public CustomerService(RootRepository rootRepository, BcryptHashService hashService,
+    public CustomerService(CustomerRootRepository customerRootRepository, BcryptHashService hashService,
                            ExistingUserService existingUserService, AccountService accountService,
-                           WalletDAO walletDAO) {
+                           WalletDAO walletDAO,UserRootRepository userRootRepository) {
         super();
-        this.rootRepository = rootRepository;
         this.hashService = hashService;
         this.existingUserService = existingUserService;
         this.accountService = accountService;
         this.walletDAO = walletDAO;
+        this.customerRootRepository = customerRootRepository;
+        this.userRootRepository = userRootRepository;
     }
 
     public Customer getCustomerById (int customerId) {
-        return rootRepository.getCustomer(customerId);
+        return customerRootRepository.getCustomer(customerId);
     }
 
     public Customer attemptCustomerRegistration (CustomerDTO customerDTO) {
@@ -47,13 +51,13 @@ public class CustomerService {
     private Customer registerCustomer(CustomerDTO customerDTO) {
             Customer customer = CustomerDTOtoCustomerMapper.mapDTOToCustomer(customerDTO);
             customer.setPassword(hashService.hash(customer.getPassword()));
-            rootRepository.createUser(customer);
-            rootRepository.createCustomer(customer);
-            User correspondingUser = rootRepository.getByUserName(customer.getUserName());
-            createAccountNewCustomer(rootRepository.getCustomer(correspondingUser.getUserId()));
-            Customer customerSetWallet= rootRepository.getCustomer(correspondingUser.getUserId());
+            userRootRepository.createUser(customer);
+            customerRootRepository.createCustomer(customer);
+            User correspondingUser = userRootRepository.getByUserName(customer.getUserName());
+            createAccountNewCustomer(customerRootRepository.getCustomer(correspondingUser.getUserId()));
+            Customer customerSetWallet= customerRootRepository.getCustomer(correspondingUser.getUserId());
             walletDAO.addSingleAssetToWallet(customerSetWallet.getUserId(), "bitcoin", BigDecimal.valueOf(0));
-            return rootRepository.getCustomer(correspondingUser.getUserId());
+            return customerRootRepository.getCustomer(correspondingUser.getUserId());
     }
 
     public String buildInputFieldErrorString(CustomerDTO customerDTO) {

@@ -6,6 +6,8 @@ import nl.hva.miw.thepiratebank.domain.Valuta;
 import nl.hva.miw.thepiratebank.domain.transfer.OrderDTO;
 import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.TradeRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.AssetRootRepository;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.WalletRootRepository;
 import nl.hva.miw.thepiratebank.service.dtomapper.OrderDTOtoOrderMapper;
 import nl.hva.miw.thepiratebank.service.market.*;
 import nl.hva.miw.thepiratebank.utilities.authorization.token.AccessTokenService;
@@ -21,19 +23,21 @@ import java.util.Optional;
 @Service
 public class OrderService {
     private final RootRepository rootRepository;
+    private final AssetRootRepository assetRootRepository;
     private final TradeRepository tradeRepository;
     private final MarketService marketService;
     private final WalletService walletService;
     private final AccessTokenService accessTokenService;
     private final ValutaService valutaService;
 
-    public OrderService(RootRepository rootRepository, TradeRepository tradeRepository, MarketService marketService, WalletService walletService, AccessTokenService accessTokenService, ValutaService valutaService) {
+    public OrderService(AssetRootRepository assetRootRepository,RootRepository rootRepository, TradeRepository tradeRepository, MarketService marketService, WalletService walletService, AccessTokenService accessTokenService, ValutaService valutaService) {
         this.rootRepository = rootRepository;
         this.tradeRepository = tradeRepository;
         this.marketService = marketService;
         this.walletService = walletService;
         this.accessTokenService = accessTokenService;
         this.valutaService = valutaService;
+        this.assetRootRepository = assetRootRepository;
     }
 
 
@@ -53,7 +57,7 @@ public class OrderService {
         Valuta valutaData = valutaService.currencyConversionMap.get(orderDTO.getValutaType());
         Order mappedOrder = OrderDTOtoOrderMapper.mapOrder(orderDTO);
         mappedOrder.setAmount(mappedOrder.getAmount().divide(valutaData.getCurrentExchangeRate(), RoundingMode.HALF_UP));
-        mappedOrder.setAsset(rootRepository.getAssetByName(orderDTO.getAsset()).orElseThrow(()-> new ConflictException("Type asset van order niet gevonden.")));
+        mappedOrder.setAsset(assetRootRepository.getAssetByName(orderDTO.getAsset()).orElseThrow(()-> new ConflictException("Type asset van order niet gevonden.")));
         mappedOrder.setUser(rootRepository.getCustomerWithWallet(mappedOrder.getUser()));
 
         if(!hasSufficientBalance(mappedOrder)) throw new ConflictException("Onvoldoende geld in de portefeuille.");

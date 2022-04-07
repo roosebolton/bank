@@ -4,6 +4,7 @@ import nl.hva.miw.thepiratebank.domain.User;
 import nl.hva.miw.thepiratebank.repository.CustomerDAO;
 import nl.hva.miw.thepiratebank.repository.RootRepository;
 import nl.hva.miw.thepiratebank.repository.UserDAO;
+import nl.hva.miw.thepiratebank.repository.rootrepositories.UserRootRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,7 +25,7 @@ class UserServiceTest {
 
 
     @MockBean
-    private RootRepository rootRepositoryMock;
+    private UserRootRepository userRootRepositoryMock;
 
     @Autowired
     public UserServiceTest(UserService userService){
@@ -35,10 +36,10 @@ class UserServiceTest {
     void setUp() {
         User testuser1 = new User ("test1@user.nl", "password1");
         User testuser2 = new User ("test2@user.nl", "password2");
-        Mockito.when(rootRepositoryMock.getByUserName("test1@User.nl")).thenReturn(testuser1);
-        Mockito.when(rootRepositoryMock.getByUserName("test2@User.nl")).thenReturn(testuser2);
-        Mockito.when(rootRepositoryMock.getUser(1)).thenReturn(testuser1);
-        Mockito.when(rootRepositoryMock.getUser(0)).thenReturn(null);
+        Mockito.when(userRootRepositoryMock.getByUserName("test1@User.nl")).thenReturn(testuser1);
+        Mockito.when(userRootRepositoryMock.getByUserName("test2@User.nl")).thenReturn(testuser2);
+        Mockito.when(userRootRepositoryMock.getUser(1)).thenReturn(testuser1);
+        Mockito.when(userRootRepositoryMock.getUser(0)).thenReturn(null);
     }
 
 
