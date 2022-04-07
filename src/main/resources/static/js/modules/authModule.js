@@ -77,8 +77,6 @@ const checkAuthLoginRedirect = () => {
  const logout = () => {
     removeAccesstoken()
     removeRefreshtoken()
-     console.log(getAccesstoken())
-     console.log(getRefreshtoken())
     return window.location.assign("/index.html");
  }
 
@@ -106,6 +104,45 @@ const settingsRefresh = (type, data) => {
     }
 }
 
+/**
+ * Methode om een not authorized eerst op te vangen en te proberen een nieuw accestoken te krijgen.
+ * @param status
+ * @param response
+ * @param url
+ * @param options
+ */
+let handle401 = (status,response,url,options) => {
+    if (status) {
+        /* tries to fetch new accestoken from  */
+        fetch(getUrl("refreshTokenAuthAPI"), settingsRefresh("GET"))
+            .then(res =>
+                res.json())
+            .then(json => {
+                saveAccesstoken(json.Authorization)
+                fetch(url, options).then(response => {
+                    handleResponse(response)
+                }).catch(error => reject(error))
+            })
+            .catch(error => reject(error))
+    } else {
+        reject(response)
+    }
+}
+
+/**
+ * Hulpmethode om de reactie op een nieuw verzoek tot authorisatie af te handelen in handle401
+ * @param response
+ */
+const handleResponse = (response) =>{
+    if (response.ok) {
+        resolve(response)
+    } else {
+        response.text().then(text => {
+            reject(text)
+        })
+    }
+}
+
 /** Custom fetch for using both access and refreshtoken
  * if first fetch with access token fails, it retrieves a new accesstoken via the refreshtoken
  * has ait custom promise which only resolves on correct response
@@ -116,29 +153,14 @@ const fetchAUTH = (url, options = {}) => {
         fetch(url, options)
             .then(response => {
                 if (response.ok)   resolve(response)
-                if (response.status === 401) {
-                    /* tries to fetch new accestoken from  */
-                    console.error("Accesstoken invalid, trying to retrieving new accesstoken")
-                    fetch(getUrl("refreshTokenAuthAPI"), settingsRefresh("GET"))
-                        .then(res =>
-                            res.json())
-                                .then(json => {
-                                    saveAccesstoken(json.Authorization)
-                                    fetch(url, options).then(response => {
-                                        if (response.ok) {resolve(response)
-                                        } else  {
-                                            response.text().then(text => { reject(text)
-                                            })
-                                        }
-                                    }).catch(error => reject(error))
-                                })
-                        .catch( error => reject(error))
-                } else {reject(response)
-                }
+                handle401(response.status===401,response,url,options)
             }).catch( error => reject(error))
     })
     return authPromise;
 }
+
+
+
 
 const refreshFetch= (url, options = {}) => {
    fetch(url, options)

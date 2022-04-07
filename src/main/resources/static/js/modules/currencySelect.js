@@ -53,11 +53,6 @@ selectedCurrency = getCurrencyFromLocal();
         document.location.reload()
 
     });
-    // document.getElementById("dropdown_pound").addEventListener("click", function () {
-    //     setCurrency("POUND")
-    //     document.location.reload()
-    //
-    // });
 
 
 export { getCurrency, getCurrencyFromLocal, getCurrencyIcon, getCurrencySign};

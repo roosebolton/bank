@@ -162,55 +162,41 @@ const setCurrentValues = () => {
 }
 
 /**
+ * Sets content of returnedc tablecell
+ * @param cellContent
+ * @returns {*}
+ */
+const returnFullCell = (cellContent) => {
+    let newCell = document.createElement(`td`)
+    return newCell.appendChild(cellContent)
+}
+
+/**
+ * Sets innerhtml in returned tablecell
+ * @param innerHtml
+ * @returns {HTMLTableCellElement}
+ */
+const returnFullCellWithText = (innerHtml) => {
+    let newCell = document.createElement(`td`)
+    newCell.innerHTML = innerHtml
+    return newCell
+}
+
+/**
  * Fills one row with the relevant user data
  * @param The asset id, as used in coingecko
  */
 const setCoinDataForId = (id, customerData) => {
-    let getString = `${coinData}${id}`
-    fetch(getString, {
-        method: 'GET',
-        headers: {},
-    })
-        .then(response => {
-                console.log(response)
-                return response.json()
-            }
-        )
-        .then(json => {
             let newRow = document.createElement('tr')
-            /////////////////cell1////////////////////
-            let newCell1 = document.createElement('td')
             let thumb = document.createElement('img')
             thumb.src = thumbs[id]
-            newCell1.appendChild(thumb)
-            newRow.appendChild(newCell1)
-            ////////////////cell2////////////////////
-            let newCell2 = document.createElement('td')
-            let code = idToCode[id]
-            newCell2.innerHTML = code
-            newRow.appendChild(newCell2)
-            /////////////////cell3//////////////////
-            let newCell3 = document.createElement('td')
-            let amount = customerData.assets_in_wallet[code]
-            newCell3.innerHTML = amount
-            newRow.appendChild(newCell3)
-            /////////////////cell4/////////////////
-            let newCell4 = document.createElement('td')
-            //get latest data from own db
-            let currentPrice = currentValues[id]
-            newCell4.innerHTML = currencyFormatter("EUR").format(currentPrice)
-            newRow.appendChild(newCell4)
-            /////////////////cell5/////////////////
-            let newCell5 = document.createElement('td')
-            let totalValue = currentPrice * amount
-            newCell5.innerHTML = currencyFormatter("EUR").format(totalValue)
-            newRow.appendChild(newCell5)
-
+            newRow.appendChild(returnFullCell(thumb))
+            newRow.appendChild(returnFullCell(returnFullCellWithText(idToCode[id])))
+            let coinAmount = customerData.assets_in_wallet[idToCode[id]]
+            newRow.appendChild(returnFullCell(returnFullCellWithText(coinAmount)))
+            newRow.appendChild(returnFullCell(returnFullCellWithText(currencyFormatter("EUR").format(currentValues[id]))))
+            newRow.appendChild(returnFullCell(returnFullCellWithText(currencyFormatter("EUR").format(currentValues[id] * coinAmount))))
             document.getElementById("table-body").appendChild(newRow)
-        })
-        .catch((error) => {
-            console.error('Foutje', error);
-        });
 }
 
 

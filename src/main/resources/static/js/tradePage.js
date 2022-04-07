@@ -285,7 +285,10 @@ const sendTrade = () => {
     hideModal()
     fetchAUTH(getMarketUrl(),settingsAccess('POST', getTradeObject()))
         .then(response => response.text())
-        .then(text => parseSuccesTransactionResponse(text))
+        .then(text => {
+            console.log(text)
+            parseSuccesTransactionResponse(text)
+        })
         .catch(error =>  error.text()).then(errortext => {
             try {
                 const data = JSON.parse(errortext);
@@ -345,7 +348,7 @@ const deletePreviousErrormessage = () => {
 }
 
 const createErrorMessages = (text,offset) => {
-    setTimeout(deletePreviousErrormessage, 5000)
+    setTimeout(deletePreviousErrormessage, 2000)
     createConfirmationFromServerModal(text,false,offset)
 }
 
@@ -703,6 +706,7 @@ const parseSuccesTransactionResponse = (text) => {
         createConfirmationFromServerModal(text,true)
         // set timeout update
         setTimeout(getOrderBookData, 5000);
+        setTimeout(getOrderData, 5000);
     }
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 import {getUrl} from "./modules/routing.js";
-import {checkAuthLoginRedirect, fetchAUTH, settingsAccess} from "./modules/authModule.js";
+import {checkAuthLoginRedirect, fetchAUTH, logout, settingsAccess} from "./modules/authModule.js";
 
 //////////////////////////////////////////////Constants///////////////////////////////////////////
 const coinData = `https://api.coingecko.com/api/v3/coins/`
@@ -9,38 +9,42 @@ const internalAssetRateEndPoint = getUrl("coinAPI");
 
 checkAuthLoginRedirect()
 
-/////////////////////////////////////////////Get gebruiker///////////////////////////////////////
-async function getUserInformationById(id) {
-    await fetchAUTH("/admin/userdata/" + id, settingsAccess('GET'))
-        .then(response => {
-            response.json()
-                .then(json => {
-                    let userInformation = json
-                    displayUserInformation(userInformation)
-                    clearWalletTable()
-                    displayWallet(userInformation.customer.userId)
-                    clearUserSearchInputField()
-                })
-                .catch((error) => {
-                    console.error('User data not loaded', error);
-                });
+document.querySelector("#logout").addEventListener("click",logout)
+
+/////////////////////////////////////////////Get gebruiker//////////////////////////////////////
+const getUserInformationById = (id) => {
+    fetchAUTH("/admin/userdata/" + id, settingsAccess('GET'))
+        .then(response =>
+            response.json())
+        .then(json => {
+            let userInformation = json
+            displayUserInformation(userInformation)
+            clearWalletTable()
+            displayWallet(userInformation.customer.userId)
+            clearUserSearchInputField()
+        })
+        .catch(error => {
+            error.json().then(json => {
+                alert(json.message);
+            })
         })
 }
 
-async function getUserInformationByUserName(userName) {
-    await fetchAUTH("/admin/userdataname/" + userName, settingsAccess('GET'))
-        .then(response => {
-            response.json()
-                .then(json => {
-                    let userInformation = json
-                    displayUserInformation(userInformation)
-                    clearWalletTable()
-                    displayWallet(userInformation.customer.userId)
-                    clearUserSearchInputField()
-                })
-                .catch((error) => {
-                    console.error('User data not loaded', error);
-                });
+const getUserInformationByUserName = (userName) => {
+    fetchAUTH("/admin/userdataname/" + userName, settingsAccess('GET'))
+        .then(response =>
+            response.json())
+        .then(json => {
+            let userInformation = json
+            displayUserInformation(userInformation)
+            clearWalletTable()
+            displayWallet(userInformation.customer.userId)
+            clearUserSearchInputField()
+        })
+        .catch(error => {
+            error.text().then(text => {
+                alert(text);
+            })
         })
 }
 
@@ -64,11 +68,11 @@ let currencyFormatter = (currentCurrency) =>
 const displayFullName = (userInformation) => {
     let firstName = userInformation.customer.personalDetails.firstName.toString()
     let lastName = userInformation.customer.personalDetails.lastName.toString()
-    return firstName+" "+infix(userInformation)+" "+lastName
+    return firstName + " " + infix(userInformation) + " " + lastName
 }
 
 const infix = (userInformation) => {
-    if (userInformation.customer.personalDetails.hasOwnProperty('inFix')){
+    if (userInformation.customer.personalDetails.hasOwnProperty('inFix')) {
         return userInformation.customer.personalDetails.inFix
     } else {
         return ""
@@ -86,22 +90,21 @@ const displayFullAddress = (userInformation) => {
 }
 
 ///////////////////////////////Laat wallet zien/////////////////////////////////////////////////////////////////////
-async function displayWallet(userId) {
-    await fetchAUTH("/admin/assets/" + userId, settingsAccess('GET'))
-        .then(response => {
-            response.json()
-                .then(json => {
-                    let userWallet = json
-                    let codes = Object.keys(userWallet.assets_in_wallet)
-                    setThumbnailsUserWallet()
-                    setCurrentValues()
-                    fillAssetTable(setCurrentIds(codes), userWallet)
-                    document.getElementById('wallet_value').innerHTML =
-                        currencyFormatter("EUR").format(userWallet.total_value)
-                })
-                .catch((error) => {
-                    console.error('User data not loaded', error);
-                });
+const displayWallet = (userId) => {
+    fetchAUTH("/admin/assets/" + userId, settingsAccess('GET'))
+        .then(response =>
+            response.json())
+        .then(json => {
+            let userWallet = json
+            let codes = Object.keys(userWallet.assets_in_wallet)
+            setThumbnailsUserWallet()
+            setCurrentValues()
+            fillAssetTable(setCurrentIds(codes), userWallet)
+            document.getElementById('wallet_value').innerHTML =
+                currencyFormatter("EUR").format(userWallet.total_value)
+        })
+        .catch((error) => {
+            console.error('Wallet data niet geladen', error);
         })
 }
 
@@ -364,6 +367,11 @@ const makePercentage = () => {
 
 const btn_aanpassenperc = document.getElementById('btn_aanpassenperc')
 btn_aanpassenperc.addEventListener('click', makePercentage)
+document.getElementById('transaction_fee').addEventListener('keypress', function (e){
+    if (e.key === 'Enter') {
+        e.preventDefault()
+    }
+});
 
 /////////////////////////////////////////////Calls/////////////////////////////////////////////////
 getCurrentTransactionPercentage()
