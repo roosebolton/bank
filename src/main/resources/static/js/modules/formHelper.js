@@ -76,3 +76,4 @@ const checkRegex = (element) => {
         return true;
     }
 }
+export {checkRegex, setValidationIconTrue,setValidationIconFalse,setErrorIcon,setCheckIcon,checkforIcons,setIconsInputfield,setValidateFieldsEventListener,setRegexCheckInputfields};

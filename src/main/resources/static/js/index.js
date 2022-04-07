@@ -1,37 +1,14 @@
 /* globals Chart:false, feather:false */
+import {idToCode} from "./modules/idToCodeModule.js";
+
 
 (function () {
     'use strict'
 
-
     /////////////////////////////////////////////constants///////////////////////////////////////////
     const coinData = `https://api.coingecko.com/api/v3/coins/`
 
-    const idToCode = {
-        "bitcoin": "BTC",
-        "ethereum":"ETH",
-        "ripple":"XRP",
-        "eos":"EOS",
-        "cardano":"ADA",
-        "solana":"SOL",
-        "avalanche-2":"AVAX",
-        "polkadot":"DOT",
-        "dogecoin":"DOGE",
-        "monero":"XMR",
-        "matic-network":"MATIC",
-        "crypto-com-chain":"CRO",
-        "cosmos":"ATOM",
-        "litecoin":"LTC",
-        "near":"NEAR",
-        "chainlink":"LINK",
-        "uniswap":"UNI",
-        "tron":"TRX",
-        "ftx-token":"FTT",
-        "algorand":"ALGO"
-    }
-
     //////////////////////////////Functions////////////////////////////////////////////////////
-
 
     /**
      * Fills the assetTable with the current user wallet data

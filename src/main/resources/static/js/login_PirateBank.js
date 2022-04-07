@@ -2,8 +2,8 @@
 import {getUrl} from "./modules/routing.js";
 
 import {authenticate} from "./modules/authModule.js";
-import {setRegexCheckInputfields,setValidateFieldsEventListener,setIconsInputfield,checkforIcons,
-setValidationIconFalse,setValidationIconTrue,checkRegex} from "./module.js";
+import {setRegexCheckInputfields,setValidateFieldsEventListener,setValidationIconFalse,setValidationIconTrue} from "./modules/formHelper.js";
+
 let allFieldcorrect = false;
 
 const btn_inloggen = document.querySelector(`#btn_inloggen`)

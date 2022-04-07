@@ -1,7 +1,7 @@
 'use strict'
 import {getUrl} from "./modules/routing.js";
-import {setRegexCheckInputfields,setValidateFieldsEventListener,setIconsInputfield,checkforIcons,
-    setValidationIconFalse,setValidationIconTrue,checkRegex} from "./module.js";
+import {setRegexCheckInputfields,setValidateFieldsEventListener,
+    setValidationIconFalse,setValidationIconTrue} from "./modules/formHelper.js";
 
 let allFieldcorrect = false;
 

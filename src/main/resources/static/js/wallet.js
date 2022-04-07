@@ -3,6 +3,8 @@
 import {getUrl} from "./modules/routing.js";
 import {checkAuthLoginRedirect, getAccesstoken, logout, isAdmin,settingsAccess} from "./modules/authModule.js";
 import {fetchAUTH} from "./modules/authModule.js";
+import {idToCode} from "./modules/idToCodeModule.js";
+
 
 /////////////////////////////////////////////constants///////////////////////////////////////////
 const coinData = `https://api.coingecko.com/api/v3/coins/`
@@ -11,28 +13,7 @@ const internalAcountDataEndPoint = getUrl("account")
 const internalHistoryDataEndPoint = getUrl("history")
 const internalAssetRateEndPoint = getUrl("coinAPI");
 
-const idToCode = {
-    "bitcoin": "BTC",
-    "ethereum": "ETH",
-    "ripple": "XRP",
-    "eos": "EOS",
-    "cardano": "ADA",
-    "solana": "SOL",
-    "avalanche-2": "AVAX",
-    "polkadot": "DOT",
-    "dogecoin": "DOGE",
-    "monero": "XMR",
-    "matic-network": "MATIC",
-    "crypto-com-chain": "CRO",
-    "cosmos": "ATOM",
-    "litecoin": "LTC",
-    "near": "NEAR",
-    "chainlink": "LINK",
-    "uniswap": "UNI",
-    "tron": "TRX",
-    "ftx-token": "FTT",
-    "algorand": "ALGO"
-}
+
 const codeToId = {
     "BTC": "bitcoin",
     "ETH": "ethereum",
@@ -441,3 +422,5 @@ const myChart = new Chart(ctx, {
         }
     }
 })
+
+export {idToCode};
