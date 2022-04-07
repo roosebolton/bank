@@ -42,7 +42,6 @@ public class CustomerDAO extends CustomerAbstractDAO {
         return result;
     }
 
-    //ToDo use different method to create a customer that is not dependent on a different DAO, see dictaat domainmapping
 
     @Override
     public void create(Customer customer) {

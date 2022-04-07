@@ -71,7 +71,6 @@ public class AdminService {
         return configDataRootRepository.getBankId();
     }
 
-    /// TODO check maken en dao for admin
 
     public boolean isAdmin () {
 

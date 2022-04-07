@@ -49,12 +49,8 @@ checkAuthLoginRedirect()
     const setupDropdownDefault = () => {
         dropdown.length = 0;
         let defaultOption = document.createElement('option');
-        // if (getCoinFromLocal() != null) {
             defaultOption.value = getCoinFromLocal();
             defaultOption.text = getCoinAbbrFromLocal();
-        // } else {
-        //     defaultOption.text = 'Kies Coin';
-        // }
         dropdown.add(defaultOption);
         dropdown.selectedIndex = 0;
     }

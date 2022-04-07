@@ -17,25 +17,11 @@ class WalletDAOTest {
 
     WalletDAO walletDAO;
     CustomerDAO customerDAO;
+
     @Autowired
-    public WalletDAOTest(WalletDAO walletDAO, CustomerDAO customerDAO){
+    public WalletDAOTest(WalletDAO walletDAO, CustomerDAO customerDAO) {
         this.walletDAO = walletDAO;
         this.customerDAO = customerDAO;
     }
-
-    @Test
-    void get() {
-//        System.out.println(walletDAO.get(26));
-    }
-
-    @Test
-    void update() {
-//        Map<Asset, BigDecimal> map = new HashMap<>();
-//        map.put(new Asset("bitcoin", "BTC"), new BigDecimal(3));
-//        map.put(new Asset("ethereum", "ETH"), new BigDecimal(-8));
-//        map.put(new Asset("algorand", "ETH"), new BigDecimal(8));
-//        map.put(new Asset("dogecoin"), new BigDecimal(10));
-//        Wallet wallet = new Wallet(customerDAO.get(1), map);
-//        walletDAO.update(wallet);
-    }
 }
+

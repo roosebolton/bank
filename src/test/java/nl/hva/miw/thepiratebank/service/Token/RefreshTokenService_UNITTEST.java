@@ -1,4 +1,4 @@
-package nl.hva.miw.thepiratebank.service.Token;//ToDO fix unresolved references
+package nl.hva.miw.thepiratebank.service.Token;
 //package nl.hva.miw.thepiratebank.service.Token;
 //
 //import nl.hva.miw.thepiratebank.domain.User;

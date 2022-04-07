@@ -24,7 +24,6 @@ class WalletServiceTest {
         Customer customer = new Customer();
         customer.setUserId(1);
         Customer customerWithWallet = walletService.getCustomerWithWallet(customer);
-//        System.out.println(customerWithWallet);
     }
 
     @Test

@@ -91,7 +91,6 @@ public class TransactionService {
 
     public void saveTransaction(Transaction transaction) {
         tradeRepository.saveTransaction(transaction);
-        //ToDo debit en credit assets in wallet moeten eerst checken of asset al in wallet zit anders save ipv update
         walletService.debitAssetsInWallet(transaction.getSeller(), transaction.getAsset().getName(), transaction.getAssetAmount());
         walletService.creditAssetsInWallet(transaction.getBuyer(), transaction.getAsset().getName(), transaction.getAssetAmount());
         accountService.doDebitAndCreditBalance(transaction);
@@ -110,7 +109,7 @@ public class TransactionService {
                 .asset(asset)
                 .assetAmount(transactionDTO.getAssetamount())
                 .value(assetRateService.getCurrentValue(asset.getName()).multiply(transactionDTO.getAssetamount()))
-                .transactionCost(adminService.getTransactionFee()) //TODO get from config
+                .transactionCost(adminService.getTransactionFee())
                 .transactionDate(new Timestamp(System.currentTimeMillis()))
                 .build();
 

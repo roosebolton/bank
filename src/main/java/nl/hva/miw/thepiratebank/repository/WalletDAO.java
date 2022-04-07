@@ -32,7 +32,6 @@ public class WalletDAO extends AbstractWalletDAO {
         return null;
     }
 
-    //ToDO this method is broken
     @Override
     public void create(Wallet wallet) {
         String sql = "INSERT INTO wallet VALUES (?, ?, ?);";

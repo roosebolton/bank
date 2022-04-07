@@ -27,7 +27,6 @@ public class WalletHistoryDAO extends AbstractWalletHistoryDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    //ToDo remove this debug sout
     public void addCurrentValueToHistory(WalletHistory walletHistory) {
         String sql = "INSERT INTO wallethistory VALUES(?,?,?)";
         jdbcTemplate.update(sql, walletHistory.getCustomer().getUserId(), Timestamp.valueOf
@@ -35,7 +34,6 @@ public class WalletHistoryDAO extends AbstractWalletHistoryDAO {
     }
 
 
-    //ToDo implement these batchUpdateMethods
     @Override
     public List<WalletHistory> getAll() {
         return null;

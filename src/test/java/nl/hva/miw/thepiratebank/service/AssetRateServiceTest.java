@@ -1,4 +1,4 @@
-package nl.hva.miw.thepiratebank.service;//ToDo fix broken references
+package nl.hva.miw.thepiratebank.service;
 //package nl.hva.miw.thepiratebank.service;
 //
 //

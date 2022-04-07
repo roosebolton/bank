@@ -36,7 +36,6 @@ public class AdminConfigController {
 
     @GetMapping("admin/transactionfee")
     public ResponseEntity<?> getTransactionFee(){
-        //AdminConfig.setTRANSACTIONFEE(adminService.getTransactionFee());
         BigDecimal transactionFee = AdminConfig.TRANSACTIONFEE;
          if(transactionFee==null){
             return ResponseEntity.noContent().build();
@@ -63,7 +62,6 @@ public class AdminConfigController {
         User user = userCustomerService.getUserService().getUserByUserId(userId);
         if(user==null){
             throw new ConflictException("Er is geen gebruiker met deze id");
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Er is geen gebruiker met deze id");
         }
         else{
         BigDecimal transactionFee = adminService.getTransactionFee();
